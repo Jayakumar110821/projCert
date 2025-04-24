@@ -10,12 +10,12 @@ pipeline {
 
     stages {
         stage('Install Puppet Agent') {
-            steps {
-                sshagent(credentials: 'slave-ssh-key') { // Use the credential ID you configured
-                    sh "ssh -o StrictHostKeyChecking=no ${SLAVE_USER}@${SLAVE_HOST} 'sudo apt update && sudo apt install -y puppet-agent'"
-                }
-            }
+    steps {
+        sshagent(credentials: ['slave-ssh-key']) { // Correct usage: credential ID in a list
+            sh "ssh -o StrictHostKeyChecking=no ${SLAVE_USER}@${SLAVE_HOST} 'sudo apt update && sudo apt install -y puppet-agent'"
         }
+    }
+}
 
         stage('Install Docker via Ansible') {
             steps {
