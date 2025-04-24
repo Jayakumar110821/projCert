@@ -9,9 +9,10 @@ pipeline {
     }
 
     stages {
-        stage('Install Puppet Agent') {
+      stage('Install Puppet Agent') {
     steps {
-        sshagent(credentials: ['slave-ssh-key']) { // Correct usage: credential ID in a list
+        sshagent(credentials: ['slave-ssh-key']) {
+            sh 'env'
             sh "ssh -o StrictHostKeyChecking=no ${SLAVE_USER}@${SLAVE_HOST} 'sudo apt update && sudo apt install -y puppet-agent'"
         }
     }
